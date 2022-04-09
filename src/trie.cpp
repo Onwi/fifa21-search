@@ -1,10 +1,11 @@
 #include "../include/trie.h"
+#include <string>
 
 // Returns new trie node (initialized to NULLs)
 struct TrieNode *getNode(void){
     struct TrieNode *pNode =  new TrieNode;
  
-    pNode->isEndOfWord = false;
+    pNode->isPlayerName = false;
  
     for (int i = 0; i < ALPHABET_SIZE; i++)
         pNode->children[i] = NULL;
@@ -14,7 +15,7 @@ struct TrieNode *getNode(void){
 
 // inserts key into trie
 // If the key is prefix of trie node, just marks leaf node
-void insert(struct TrieNode *root, std::string key, int id){
+void insert(struct TrieNode *root, std::string key, int id, std::string positions){
     struct TrieNode *pCrawl = root;
  
     for (int i = 0; i < key.length(); i++){
@@ -24,10 +25,10 @@ void insert(struct TrieNode *root, std::string key, int id){
  
         pCrawl = pCrawl->children[index];
     }
- 
     // mark last node as leaf
-    pCrawl->isEndOfWord = true;
+    pCrawl->isPlayerName = true;
 	pCrawl->playerID = id;
+	pCrawl->positions = positions;
 }
 
 

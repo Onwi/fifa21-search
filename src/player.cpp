@@ -1,4 +1,4 @@
-#include "player.h"
+#include "../include/player.h"
 
 unsigned int hashing(unsigned int x, int size){
     x = ((x >> 16) ^ x) * 0x45d9f3b;

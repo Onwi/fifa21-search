@@ -1,27 +1,38 @@
+#include <functional>
 #include <iostream>
 #include <fstream>
+#include <list>
 
 #include "../include/player.h"
 #include "../include/trie.h"
 
 int main(int argc, char *argv[]){
-	struct TrieNode *node;	
-	
-	std::string name1, name2, name3;
+	std::string name1, name2, name3, nam4, name4, name6, name7;
+	std::list <struct TrieNode*> lista;
+	struct TrieNode *pesquisa= getNode();
 
+	// test strings	
 	name1 = "Leo Messi";
+	name4 = "Leo M";
+	name6 = "Leo Marcos";
 	name2 = "Neymar";
 	name3 = "Cristiano Ronaldo";
+	nam4 = "Leo";
 	
-	insert(node, name1, 1000);
-	insert(node, name1, 1001);
-	insert(node, name1, 1002);
+	insert(pesquisa, name1, 1000, "cw, mei");
+	insert(pesquisa, name2, 1001, "ata, pte");
+	insert(pesquisa, name3, 1002, "ata, ptd");
+	//insert(pesquisa, name4, 1004, "cw, mei");
+	insert(pesquisa, name6, 1050, "ata, pe");
+	
+	struct TrieNode *node;		
 
-	struct TrieNode *pesquisa;
+	node = search(pesquisa, nam4);
 
-	pesquisa = search(node, "Leo");
-
-	std::cout << pesquisa->playerID;
-
+	std::list<struct TrieNode*>::iterator i;
+	for(i = lista.begin(); i!=lista.end(); i++){
+		std::cout << (*i)->playerID << (*i)->positions << std::endl;
+	}	
+	
 	return 0;
 }
