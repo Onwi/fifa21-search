@@ -1,4 +1,5 @@
 #include "../include/trie.h"
+#include <iostream>
 #include <string>
 
 // Returns new trie node (initialized to NULLs)
@@ -47,4 +48,21 @@ struct TrieNode *search(struct TrieNode *root, std::string key){
     }
  
     return pCrawl;
+}
+
+// check if current node is a player's name 
+bool isName(struct TrieNode* root){
+    return root->isPlayerName != false;
+}
+
+void addPlayers(struct TrieNode* root, int level, std::list <struct TrieNode*> *lista){
+    if (isName(root)){
+   		(*lista).push_back(root); 
+	}
+ 
+    for (int i = 0; i < ALPHABET_SIZE; i++){
+        if (root->children[i]){
+            addPlayers(root->children[i], level + 1, lista);
+        }
+    }
 }

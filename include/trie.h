@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include <list>
 
 const int ALPHABET_SIZE = 27; //26 letters and space
 
@@ -22,6 +23,12 @@ void insert(struct TrieNode *root, std::string key, int id, std::string position
 
 // search for a @key prefix name on trie
 struct TrieNode *search(struct TrieNode *root, std::string key);
+
+// check if current node is a player's name
+bool isName(struct TrieNode* root);
+
+//add a node to list if node is a player's name
+void addPlayers(struct TrieNode* root, int level, std::list <struct TrieNode*> *lista);
 
 #endif
 
