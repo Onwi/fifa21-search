@@ -62,34 +62,14 @@ int main(int argc, char *argv[]){
     	}
 		colF=0;
 		rowF=true;
-		// convert name to lower case to work with our 27 alphabet size trie	
-		//std::for_each(p_name.begin(), p_name.end(), [](char & c){
-    		//c = ::tolower(c);
-		//});
+		// convert p_name to lower case to work with our 27 alphabet size trie	
+		std::for_each(p_name.begin(), p_name.end(), [](char & c){
+    		c = ::tolower(c);
+		});
 		// insert node on trie
 		insertTrie(names, p_name, le_id, pos);
-		std::cout << le_id << p_name << pos << std::endl;
-  	}	
-	std::string pesquisa, argu;
-	std::cout << "entre com a pesquisa \n";	
-	std::cin >>	pesquisa >> argu;
+  	}
 	
-	struct TrieNode *prefix;
-	prefix = searchTrie(names, argu);
-	
-	std::cout<< prefix->isPlayerName << "A\n";	
-	
-	addPlayers(prefix, 0, &lista);	
-	std::cout<< lista.size() << "B\n";	
-	
-	std::list <TrieNode *>::iterator it;
-	std::cout << "ID " << "positions " << "rating " << "count\n";
-	
-	for(it = lista.begin(); it!=lista.end(); it++){
-		Info aux = hashRR.search((*it)->playerID);
-		std::cout << aux.playerID << '\t' << (*it)->positions;
-		std::cout << '\t' << aux.average(aux.reviews, aux.rating) << '\t' << aux.reviews << '\n';
-	}
 		
 	return 0;
 }
