@@ -19,10 +19,10 @@ struct TrieNode{
 // Returns new trie node (initialized to NULLs)
 struct TrieNode *getNode(void);
 
-void insert(struct TrieNode *root, std::string key, int id, std::string positions);
+void insertTrie(struct TrieNode *root, std::string key, int id, std::string positions);
 
 // search for a @key prefix name on trie
-struct TrieNode *search(struct TrieNode *root, std::string key);
+struct TrieNode *searchTrie(struct TrieNode *root, std::string key);
 
 // check if current node is a player's name
 bool isName(struct TrieNode* root);

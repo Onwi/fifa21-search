@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.16.3)
+project(fifa)
+file(GLOB_RECURSE SRC_FILES src/*.cpp)
+add_executable(fifa ${SRC_FILES})
+set(CMAKE_CXX_STANDARD 11)
+target_include_directories(fifa PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}../include)

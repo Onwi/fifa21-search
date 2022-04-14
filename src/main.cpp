@@ -2,40 +2,94 @@
 #include <iostream>
 #include <fstream>
 #include <list>
+#include <string>
+#include <algorithm>
 
 #include "../include/player.h"
 #include "../include/trie.h"
+#include "../include/parser.hpp"
+
+#define TABLE_SIZE 2000
+using namespace aria::csv;
 
 int main(int argc, char *argv[]){
-	std::string name1, name2, name3, nam4, name4, name6, name7;
-	std::list <struct TrieNode*> lista;
-	struct TrieNode *pesquisa= getNode();
+	std::ifstream rr("../dataset/minirating.csv");
+	CsvParser parser(rr);
+	int le_id, colF=0;
+   	bool rowF = false;	
+	float le_rating;	
+	std::list <TrieNode*> lista;
 
-	// test strings	
-	name1 = "Leo Messi";
-	name4 = "Leo M";
-	name6 = "Leonardo";
-	name2 = "Neymar";
-	name3 = "Cristiano Ronaldo";
-	nam4 = "Leo";
+	//hash table for rating and reviews
+	HashTable hashRR(TABLE_SIZE);
+	// read player ID and rating and put on table
+	for (auto& row : parser) {
+    	for (auto& field : row) {
+      		//std::cout << field << " | ";
+			// ignore first column and first row 
+			if(rowF){
+				if(colF == 1) le_id = std::stoi(field);
+				if(colF == 2) le_rating = std::stof(field); 
+				colF++;
+			}
+    	}
+    	//std::cout << std::endl;
+		colF=0;
+		rowF=true;
+		Info le_rr(le_id, le_rating);
+		hashRR.insert(le_rr);
+  	}
+	rr.close();
 	
-	insert(pesquisa, name1, 1000, "cw, mei");
-	insert(pesquisa, name2, 1001, "ata, pte");
-	insert(pesquisa, name3, 1002, "ata, ptd");
-	insert(pesquisa, name4, 1004, "cw, mei");
-	insert(pesquisa, name6, 1050, "ata, pe");
+	std::ifstream rname("../dataset/players.csv");
+	CsvParser parserplyer(rname);
+	// Trie for players names	
+	struct TrieNode *names = getNode();
+	// read player name, ID and position and store on trie
+	rowF=false;
+	colF=0;
+	std::string p_name, pos;
 	
-	struct TrieNode *node;		
-
-	node = search(pesquisa, nam4);
+	for (auto& row : parserplyer) {
+		for (auto& field : row) {
+			// ignore first row 
+			if(rowF){
+				if(colF ==0) le_id= std::stoi(field);
+				if(colF ==1) p_name = field;
+				if(colF ==2) pos = field;
+				colF++;
+			}
+    	}
+		colF=0;
+		rowF=true;
+		// convert name to lower case to work with our 27 alphabet size trie	
+		//std::for_each(p_name.begin(), p_name.end(), [](char & c){
+    		//c = ::tolower(c);
+		//});
+		// insert node on trie
+		insertTrie(names, p_name, le_id, pos);
+		std::cout << le_id << p_name << pos << std::endl;
+  	}	
+	std::string pesquisa, argu;
+	std::cout << "entre com a pesquisa \n";	
+	std::cin >>	pesquisa >> argu;
 	
-	addPlayers(node, 0, &lista);	
-
-	std::list<struct TrieNode*>::iterator i;
-	std::cout << lista.size() << std::endl;
-	for(i = lista.begin(); i!=lista.end(); i++){
-		std::cout << (*i)->playerID << (*i)->positions << std::endl;
-	}	
+	struct TrieNode *prefix;
+	prefix = searchTrie(names, argu);
 	
+	std::cout<< prefix->isPlayerName << "A\n";	
+	
+	addPlayers(prefix, 0, &lista);	
+	std::cout<< lista.size() << "B\n";	
+	
+	std::list <TrieNode *>::iterator it;
+	std::cout << "ID " << "positions " << "rating " << "count\n";
+	
+	for(it = lista.begin(); it!=lista.end(); it++){
+		Info aux = hashRR.search((*it)->playerID);
+		std::cout << aux.playerID << '\t' << (*it)->positions;
+		std::cout << '\t' << aux.average(aux.reviews, aux.rating) << '\t' << aux.reviews << '\n';
+	}
+		
 	return 0;
 }
