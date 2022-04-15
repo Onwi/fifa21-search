@@ -50,7 +50,6 @@ int main(int argc, char *argv[]){
 	rowF=false;
 	colF=0;
 	std::string p_name, pos;
-	
 	for (auto& row : parserplyer) {
 		for (auto& field : row) {
 			// ignore first row 
@@ -67,21 +66,36 @@ int main(int argc, char *argv[]){
 		std::for_each(p_name.begin(), p_name.end(), [](char & c){
     		c = ::tolower(c);
 		});
+		// remove '-' and '.' from names and change for ' '
+		for(int k=0; k < p_name.length(); k++){
+			if(p_name[k] == '-' || p_name[k] == '.')
+				p_name[k] = ' ';
+		}
 		// insert node on trie
 		insertTrie(names, p_name, le_id, pos);
   	}
 	rname.close();
 
+	struct TrieNode *prefix;
 	std::string arguments;
 	bool sair = false;
+	int userid;
 	do{
 		switch(askSearchType(&arguments)){
 			case 1:{
-					struct TrieNode* snode = searchTrie(names, arguments);	
-					addPlayers(snode, 0, &lista);
+					prefix = searchTrie(names, arguments);	
+					if(!prefix){ 
+						std::cout << "nao ha nome com esse prefixo\n";
+						break;
+					}
+					addPlayers(prefix, 0, &lista);
+					system("clear");
+					showinfos(&lista, &hashRR);
+					lista.clear();
 					break;
 				}
-			case 2:
+			case 2: userid = std::stoi(arguments);
+					
 			case 3:
 			case 4:
 			default: sair = true;	

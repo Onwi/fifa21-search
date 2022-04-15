@@ -12,6 +12,7 @@ struct TrieNode{
     struct TrieNode *children[ALPHABET_SIZE];
 	int playerID;
 	std::string positions;	
+	std::string playerName;
     // isEndOfWord is true if the node represents end of a word
     bool isPlayerName;
 };

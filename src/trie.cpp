@@ -30,6 +30,7 @@ void insertTrie(struct TrieNode *root, std::string key, int id, std::string posi
 	pCrawl->isPlayerName = true;
 	pCrawl->playerID = id;
 	pCrawl->positions = positions;
+	pCrawl->playerName = key;
 }
 
 
@@ -59,7 +60,7 @@ void addPlayers(struct TrieNode* root, int level, std::list <struct TrieNode*> *
     if (isName(root)){
    		(*lista).push_back(root); 
 	}
- 
+	 
     for (int i = 0; i < ALPHABET_SIZE; i++){
         if (root->children[i]){
             addPlayers(root->children[i], level + 1, lista);
