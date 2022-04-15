@@ -8,6 +8,7 @@
 #include "../include/player.h"
 #include "../include/trie.h"
 #include "../include/parser.hpp"
+#include "../include/functions.h"
 
 #define TABLE_SIZE 2000
 using namespace aria::csv;
@@ -69,7 +70,23 @@ int main(int argc, char *argv[]){
 		// insert node on trie
 		insertTrie(names, p_name, le_id, pos);
   	}
-	
+	rname.close();
+
+	std::string arguments;
+	bool sair = false;
+	do{
+		switch(askSearchType(&arguments)){
+			case 1:{
+					struct TrieNode* snode = searchTrie(names, arguments);	
+					addPlayers(snode, 0, &lista);
+					break;
+				}
+			case 2:
+			case 3:
+			case 4:
+			default: sair = true;	
+		}
+	}while(!sair);
 		
 	return 0;
 }

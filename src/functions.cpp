@@ -2,6 +2,11 @@
 #include <string>
 using namespace std;
 
+// ask which search user wants do
+// 2.1 return 1 for search on players name
+// 2.2 return 2 for search on user reviews
+// 2.3 return 3 for search on best players by position
+// 2.4 return 4 for search on tags 
 int askSearchType(string *argument){
     string str, type;
 
@@ -27,6 +32,4 @@ int askSearchType(string *argument){
         (*argument) = str.substr(i);
         return 4;
     }else return -1;
-
-    return 0;
 }
