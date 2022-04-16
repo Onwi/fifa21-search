@@ -21,17 +21,15 @@ HashTable::HashTable(int t_size){
 	table = new std::list<Info>[size];
 }
 
-Info HashTable::search(int id){
-	Info fakeInfo(-1,-1);
-
+Info* HashTable::search(int id){
 	int index = hashing(id, this->size);
 	std::list <Info>::iterator i;
 
 	for(i = table[index].begin(); i != table[index].end(); i++){
-		if(compare_id(*i, id)) return *i;
+		if(compare_id(*i, id)) return &(*i);
 	}
 	// if not on table throw fake data, which will never be on table
-	return fakeInfo;
+	return NULL;
 }
 
 //
@@ -48,9 +46,9 @@ void HashTable::inc_rr(Info p_info){
 }
 
 void HashTable::insert(Info p_info){
-	Info aux = HashTable::search(p_info.playerID);
+	Info *aux = HashTable::search(p_info.playerID);
 	// if player not on table
-	if(aux.playerID != p_info.playerID){
+	if(!aux){
 		// insert on table
 		int index = hashing(p_info.playerID, this->size);
 		table[index].push_back(p_info);

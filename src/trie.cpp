@@ -21,6 +21,7 @@ void insertTrie(struct TrieNode *root, std::string key, int id, std::string posi
  
     for (int i = 0; i < key.length(); i++){
         int index = key[i] - 'a';
+		//std::cout << "index" << index << '\n';
         if (!pCrawl->children[index])
             pCrawl->children[index] = getNode();
  

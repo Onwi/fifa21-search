@@ -15,6 +15,8 @@ public:
 	int playerID;
 	int reviews = 1;
 	float rating;
+	std::string name;
+	std::string position;
 
 	Info(int id, float rt){
 		this->playerID = id;
@@ -33,7 +35,7 @@ public:
 	HashTable(int t_size);
 
 	// search for info on table by player @id
-	Info search(int id);
+	Info* search(int id);
 	// insert player info on table 
 	void insert(Info p_info);
 	// increment review and rating if already on table

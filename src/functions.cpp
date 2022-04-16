@@ -44,8 +44,17 @@ void showinfos(list <TrieNode*> *lista, HashTable *table){
 	std::list <TrieNode*>::iterator it;
 	cout << "sofifa_id" << setw(ESPACO) << "name" << setw(ESPACO) << "positions" << setw(ESPACO) << "rating" << setw(ESPACO) << "count\n";
 	for(it = (*lista).begin(); it!=(*lista).end(); it++){
-		Info aux = (*table).search((*it)->playerID);
-		cout << (*it)->playerID << setw(ESPACO) << (*it)->playerName << setw(ESPACO) 
-             << (*it)->positions << setw(ESPACO) << aux.average(aux.reviews, aux.rating) << setw(ESPACO) << aux.reviews << endl;
+		Info *aux = (*table).search((*it)->playerID);
+		if(aux){
+			cout << (*it)->playerID << setw(ESPACO) << (*it)->playerName << setw(ESPACO) 
+            	 << (*it)->positions << setw(ESPACO) << (*aux).average((*aux).reviews, (*aux).rating) << setw(ESPACO) << (*aux).reviews << endl;
+		}
 	} 
+}
+
+void addNamePos(string name, string pos, Info *node){
+	if(node){
+		(*node).name = name;
+		(*node).position = pos;
+	}
 }
