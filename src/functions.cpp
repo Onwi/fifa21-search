@@ -4,6 +4,8 @@
 #include <list>
 #include "../include/trie.h"
 #include "../include/player.h"
+#include "../include/user.h"
+#include "../include/functions.h"
 using namespace std;
 
 #define ESPACO 40
@@ -58,3 +60,28 @@ void addNamePos(string name, string pos, Info *node){
 		(*node).position = pos;
 	}
 }
+
+void printUser(float avg, Info *inf){
+	cout << (*inf).playerID << setw(ESPACO) << (*inf).name << setw(ESPACO) << (*inf).average((*inf).reviews, (*inf).rating)
+		<< setw(ESPACO) <<(*inf).reviews << setw(ESPACO) << avg << endl;
+}
+
+void showUser(User *u, HashTable *h){
+	list <Info>::iterator it;
+	int pID;
+	float useravg;
+	for(it = (*u).revisados.begin(); it!=(*u).revisados.end(); it++){
+		pID = (*it).playerID;
+		useravg = (*it).rating;
+		Info *newnode = (*h).search(pID);		
+		printUser(useravg, newnode);
+	}
+}
+
+
+
+
+
+
+
+

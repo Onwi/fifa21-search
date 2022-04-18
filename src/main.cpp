@@ -120,6 +120,7 @@ int main(int argc, char *argv[]){
 	std::string arguments;
 	bool sair = false;
 	int userid;
+	User *newnode;
 	do{
 		switch(askSearchType(&arguments)){
 			case 1:{
@@ -135,7 +136,9 @@ int main(int argc, char *argv[]){
 					break;
 				}
 			case 2: userid = std::stoi(arguments);
-					
+					newnode = usersTable.searchuser(userid);
+					showUser(newnode, &hashRR);
+					break;
 			case 3:
 			case 4:
 			default: sair = true;	
