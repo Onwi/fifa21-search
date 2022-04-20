@@ -16,7 +16,7 @@
 using namespace aria::csv;
 
 int main(int argc, char *argv[]){
-	std::ifstream rr("../dataset/minirating.csv");
+	std::ifstream rr("../dataset/rating.csv");
 	CsvParser parser(rr);
 	int le_id, colF=0, id_rating;
    	bool rowF = false;	

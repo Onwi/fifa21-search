@@ -10,6 +10,15 @@ using namespace std;
 
 #define ESPACO 40
 
+
+// SORTS --------------------------------------------------------------------
+bool compare(const Info &id1, const Info &id2){
+	if(id1.rating <= id2.rating ) return false;
+	else return true;
+}
+
+// --------------------------------------------------------------------------
+
 // ask which search user wants do
 // 2.1 return 1 for search on players name
 // 2.2 return 2 for search on user reviews
@@ -70,6 +79,7 @@ void showUser(User *u, HashTable *h){
 	list <Info>::iterator it;
 	int pID;
 	float useravg;
+	//(*u).revisados.sort(compare);
 	for(it = (*u).revisados.begin(); it!=(*u).revisados.end(); it++){
 		pID = (*it).playerID;
 		useravg = (*it).rating;
