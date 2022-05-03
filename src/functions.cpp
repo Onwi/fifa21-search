@@ -6,6 +6,8 @@
 #include "../include/player.h"
 #include "../include/user.h"
 #include "../include/functions.h"
+#include "../include/sorts.hpp"
+
 using namespace std;
 
 #define ESPACO 40
@@ -79,19 +81,22 @@ void showUser(User *u, HashTable *h){
 	list <Info>::iterator it;
 	int pID;
 	float useravg;
-	//(*u).revisados.sort(compare);
-	for(it = (*u).revisados.begin(); it!=(*u).revisados.end(); it++){
-		pID = (*it).playerID;
-		useravg = (*it).rating;
-		Info *newnode = (*h).search(pID);		
-		printUser(useravg, newnode);
+
+	//u->revisados.sort(compare);
+	Info arr[u->revisados.size()];
+	copy(u->revisados.begin(), u->revisados.end(), arr);
+	int n = sizeof(arr) / sizeof(arr[0]);
+	quickSortRatings(arr, 0, n - 1);
+
+	int max = 20;
+	if(max > n){
+		max = n;
 	}
+	int  j = u->revisados.size();
+	for(int i = j-1; i >= j-20; i--){
+		pID = arr[i].playerID;
+		useravg = arr[i].rating;
+		Info *newnode = h->search(pID);
+		printUser(useravg, newnode);
+	}	
 }
-
-
-
-
-
-
-
-

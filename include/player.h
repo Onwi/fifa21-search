@@ -18,6 +18,8 @@ public:
 	std::string name;
 	std::string position;
 
+	Info(){};
+
 	Info(int id, float rt){
 		this->playerID = id;
 		this->rating = rt;

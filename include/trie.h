@@ -6,7 +6,7 @@
 #include <string>
 #include <list>
 
-const int ALPHABET_SIZE = 27; //26 letters and space
+const int ALPHABET_SIZE = 31; //26 letters and space
 
 struct TrieNode{
     struct TrieNode *children[ALPHABET_SIZE];
