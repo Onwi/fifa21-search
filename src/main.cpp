@@ -70,15 +70,6 @@ int main(int argc, char *argv[]){
     	}
 		colF=0;
 		rowF=true;
-		/*/ convert p_name to lower case to work with our 27 alphabet size trie	
-		std::for_each(p_name.begin(), p_name.end(), [](char & c){
-    		c = ::tolower(c);
-		});
-		// remove '-' and '.' from names and change for ' '
-		/*for(int k=0; k < p_name.length(); k++){
-			if(p_name[k] == '-' || p_name[k] == '.')
-				p_name[k] = ' ';
-		}*/
 		// insert node on trie*/
 		trieNode->insert(p_name, le_id, pos);
 	}
@@ -102,15 +93,6 @@ int main(int argc, char *argv[]){
     	}
 		colF=0;
 		rowF=true;
-		/*/ convert p_name to lower case to work with our 27 alphabet size trie	
-		std::for_each(p_name.begin(), p_name.end(), [](char & c){
-    		c = ::tolower(c);
-		});
-		// remove '-' and '.' from names and change for ' '
-		/*for(int k=0; k < p_name.length(); k++){
-			if(p_name[k] == '-' || p_name[k] == '.')
-				p_name[k] = ' ';
-		}*/
 		hnode = hashRR.search(le_id);
 		addNamePos(p_name, pos, hnode);
 	}
