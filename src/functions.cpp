@@ -12,13 +12,6 @@ using namespace std;
 
 #define ESPACO 40
 
-
-// SORTS --------------------------------------------------------------------
-bool compare(const Info &id1, const Info &id2){
-	if(id1.rating <= id2.rating ) return false;
-	else return true;
-}
-
 // --------------------------------------------------------------------------
 
 // ask which search user wants do
@@ -53,8 +46,8 @@ int askSearchType(string *argument){
     }else return -1;
 }
 
-void showinfos(list <TrieNode*> *lista, HashTable *table){
-	std::list <TrieNode*>::iterator it;
+void showinfos(list <Trie*> *lista, HashTable *table){
+	std::list <Trie*>::iterator it;
 	cout << "sofifa_id" << setw(ESPACO) << "name" << setw(ESPACO) << "positions" << setw(ESPACO) << "rating" << setw(ESPACO) << "count\n";
 	for(it = (*lista).begin(); it!=(*lista).end(); it++){
 		Info *aux = (*table).search((*it)->playerID);

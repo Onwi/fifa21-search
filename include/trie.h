@@ -5,31 +5,34 @@
 #include <cstdlib>
 #include <string>
 #include <list>
+using namespace std;
 
-const int ALPHABET_SIZE = 31; //26 letters and space
-
-struct TrieNode{
-    struct TrieNode *children[ALPHABET_SIZE];
-	int playerID;
-	std::string positions;	
-	std::string playerName;
-    // isEndOfWord is true if the node represents end of a word
-    bool isPlayerName;
-};
+const int ALPHABET_SIZE = 128; //26 letters and space
+// A class to store a Trie node
+class Trie{
+public:
+    bool isLeaf;
+    int playerID;
+    string positions;
+    string playerName;
+    Trie* character[ALPHABET_SIZE];
  
-// Returns new trie node (initialized to NULLs)
-struct TrieNode *getNode(void);
-
-void insertTrie(struct TrieNode *root, std::string key, int id, std::string positions);
-
-// search for a @key prefix name on trie
-struct TrieNode *searchTrie(struct TrieNode *root, std::string key);
+    // Constructor
+    Trie(){
+        this->isLeaf = false;
+ 
+        for (int i = 0; i < ALPHABET_SIZE; i++) {
+            this->character[i] = nullptr;
+        }
+    }
+ 
+    void insert(string key, int id, string positions);
+    Trie* search(string key);
+};
 
 // check if current node is a player's name
-bool isName(struct TrieNode* root);
-
+bool isName(Trie* root);
 //add a node to list if node is a player's name
-void addPlayers(struct TrieNode* root, int level, std::list <struct TrieNode*> *lista);
+void addPlayers(Trie* root, int level, list <Trie*> *lista);
 
 #endif
-

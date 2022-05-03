@@ -16,12 +16,12 @@
 using namespace aria::csv;
 
 int main(int argc, char *argv[]){
-	std::ifstream rr("../dataset/rating.csv");
+	std::ifstream rr("../dataset/minirating.csv");
 	CsvParser parser(rr);
 	int le_id, colF=0, id_rating;
    	bool rowF = false;	
 	float le_rating;	
-	std::list <TrieNode*> lista;
+	std::list <Trie*> lista;
 	Info *hnode;
 	HashUser usersTable(USERS_SIZE);
 
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]){
 	std::ifstream rname("../dataset/players.csv");
 	CsvParser parserplyer(rname);
 	// Trie for players names	
-	struct TrieNode *names = getNode();
+	Trie* trieNode = new Trie();
 	// read player name, ID and position and store on trie
 	rowF=false;
 	colF=0;
@@ -70,17 +70,17 @@ int main(int argc, char *argv[]){
     	}
 		colF=0;
 		rowF=true;
-		// convert p_name to lower case to work with our 31 alphabet size trie	
+		/*/ convert p_name to lower case to work with our 27 alphabet size trie	
 		std::for_each(p_name.begin(), p_name.end(), [](char & c){
     		c = ::tolower(c);
 		});
-		/*/ remove '-' and '.' from names and change for ' '
-		for(int k=0; k < p_name.length(); k++){
+		// remove '-' and '.' from names and change for ' '
+		/*for(int k=0; k < p_name.length(); k++){
 			if(p_name[k] == '-' || p_name[k] == '.')
 				p_name[k] = ' ';
-		}
+		}*/
 		// insert node on trie*/
-		insertTrie(names, p_name, le_id, pos);
+		trieNode->insert(p_name, le_id, pos);
 	}
 	rname.close();
 	
@@ -102,12 +102,12 @@ int main(int argc, char *argv[]){
     	}
 		colF=0;
 		rowF=true;
-		// convert p_name to lower case to work with our 31 alphabet size trie	
+		/*/ convert p_name to lower case to work with our 27 alphabet size trie	
 		std::for_each(p_name.begin(), p_name.end(), [](char & c){
     		c = ::tolower(c);
 		});
-		/*/ remove '-' and '.' from names and change for ' '
-		for(int k=0; k < p_name.length(); k++){
+		// remove '-' and '.' from names and change for ' '
+		/*for(int k=0; k < p_name.length(); k++){
 			if(p_name[k] == '-' || p_name[k] == '.')
 				p_name[k] = ' ';
 		}*/
@@ -116,7 +116,7 @@ int main(int argc, char *argv[]){
 	}
 	hashnames.close();
 
-	struct TrieNode *prefix;
+	Trie* prefix;
 	std::string arguments;
 	bool sair = false;
 	int userid;
@@ -124,7 +124,7 @@ int main(int argc, char *argv[]){
 	do{
 		switch(askSearchType(&arguments)){
 			case 1:{
-					prefix = searchTrie(names, arguments);	
+					prefix = trieNode->search(arguments);
 					if(!prefix){ 
 						std::cout << "nao ha nome com esse prefixo\n";
 						break;
